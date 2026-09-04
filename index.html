@@ -250,8 +250,9 @@ window.dispatchEvent(new Event("db-ready"));
 
 if(typeof Matter === "undefined"){
   document.getElementById("startSheet").innerHTML =
-    '<div class="card"><h2>불러오기 실패</h2>' +
-    '<p>물리 엔진을 읽지 못했습니다.<br>페이지를 새로고침해 주세요.</p></div>';
+    '<div class="card"><h2>잠깐만요</h2>' +
+    '<p>준비가 덜 됐어요.<br>새로고침하면 됩니다.</p>' +
+    '<button class="btn" onclick="location.reload()">다시 불러오기</button></div>';
   return;
 }
 
@@ -754,7 +755,7 @@ async function showRank(listEl, msgEl, mine){
     renderRank(listEl, await window.PUMPKIN_DB.top(15), mine);
     msgEl.textContent = "";
   }catch(err){
-    msgEl.textContent = "순위표를 불러오지 못했습니다.";
+    msgEl.textContent = "순위표를 잠깐 못 읽었어요. 다시 눌러주세요.";
     console.error(err);
   }
 }
@@ -772,7 +773,7 @@ $("saveBtn").addEventListener("click", async ()=>{
     await showRank($("rankList"), $("saveMsg"), {name, score});
   }catch(err){
     $("saveBtn").disabled = false;
-    $("saveMsg").textContent = "실패했습니다. 다시 눌러주세요.";
+    $("saveMsg").textContent = "잘 안 됐어요. 한 번 더 눌러주세요.";
     console.error(err);
   }
 });
@@ -797,10 +798,11 @@ $("closeRank").addEventListener("click", ()=> $("rankSheet").classList.remove("o
   sb.disabled = false;
   sb.textContent = "시작하기";
   }catch(err){
-    console.error(err);
+    console.error(err);   // 자세한 내용은 개발자 콘솔에만 남긴다
     document.getElementById("startSheet").innerHTML =
-      '<div class="card"><h2>시작할 수 없습니다</h2><p>' +
-      String(err.message || err) + '</p></div>';
+      '<div class="card"><h2>잠깐만요</h2>' +
+      '<p>준비가 덜 됐어요.<br>새로고침하면 됩니다.</p>' +
+      '<button class="btn" onclick="location.reload()">다시 불러오기</button></div>';
   }
 })();
 
